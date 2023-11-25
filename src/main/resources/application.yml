@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: school1_route
+        uri: http://localhost:8093
+        predicates:
+        - Cookie=tenant,school1
+      - id: school1_route
+        uri: http://localhost:8094
+        predicates:
+        - Cookie=tenant,school2
+      - id: school2_route
+        uri: http://httpbin.org
+        predicates:
+        - Path=/get/**
+logging: 
+  level: 
+    org: 
+      springframework: 
+        cloud: 
+          gateway: TRACE
+management: 
+  endpoints: 
+    web: 
+      exposure: 
+        include: "*"
